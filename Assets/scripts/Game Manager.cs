@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     }
    
 
-    public static void ShowCanevas(int canevas)
+    public  void ShowCanevas(int canevas)
     {
         if(canevas == 0)
         {

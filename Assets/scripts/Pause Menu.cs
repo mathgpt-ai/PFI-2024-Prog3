@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    bool isPaused=false;
+    [SerializeField] private Canvas Game;//0
+    [SerializeField] private Canvas Pause;//1
+    [SerializeField] private Canvas Settings;//2
 
-    // Update is called once per frame
+
     void Update()
     {
-        
+       if(Input.GetKeyUp(KeyCode.Escape))
+            isPaused = !isPaused;
+       
     }
 }
