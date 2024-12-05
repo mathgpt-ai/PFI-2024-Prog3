@@ -19,7 +19,7 @@ public class ControlManager : MonoBehaviour
         controls.Add("backwards", KeyCode.S);
         controls.Add("left", KeyCode.A);
         controls.Add("right", KeyCode.D);
-        controls.Add("Reload",KeyCode.R);
+        controls.Add("reload",KeyCode.R);
         controls.Add("shoot", KeyCode.Mouse0);
         controls.Add("aim", KeyCode.Mouse1);
         controls.Add("sprint", KeyCode.LeftControl);
