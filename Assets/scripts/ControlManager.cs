@@ -51,5 +51,6 @@ public class ControlManager : MonoBehaviour
         {
             ChangeControls(controlName);
         }
+        
     }
 }
