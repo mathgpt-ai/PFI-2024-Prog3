@@ -341,14 +341,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1880052930}
         m_TargetAssemblyTypeName: ControlManager, Assembly-CSharp
-        m_MethodName: ChangeControls
+        m_MethodName: ChangeDictionary
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: fowards
+          m_StringArgument: forward
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &72343018
@@ -811,7 +811,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1880052930}
         m_TargetAssemblyTypeName: ControlManager, Assembly-CSharp
-        m_MethodName: ChangeControls
+        m_MethodName: ChangeDictionary
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1200,7 +1200,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1880052930}
         m_TargetAssemblyTypeName: ControlManager, Assembly-CSharp
-        m_MethodName: ChangeControls
+        m_MethodName: ChangeDictionary
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3703,7 +3703,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1880052930}
         m_TargetAssemblyTypeName: ControlManager, Assembly-CSharp
-        m_MethodName: ChangeControls
+        m_MethodName: ChangeDictionary
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3837,7 +3837,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1880052930}
         m_TargetAssemblyTypeName: ControlManager, Assembly-CSharp
-        m_MethodName: ChangeControls
+        m_MethodName: ChangeDictionary
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4905,6 +4905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listening: 0
+  nameof: 
   buttons:
   - {fileID: 72343017}
   - {fileID: 2088086875}
@@ -5016,7 +5017,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1880052930}
         m_TargetAssemblyTypeName: ControlManager, Assembly-CSharp
-        m_MethodName: ChangeControls
+        m_MethodName: ChangeDictionary
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5284,7 +5285,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1880052930}
         m_TargetAssemblyTypeName: ControlManager, Assembly-CSharp
-        m_MethodName: ChangeControls
+        m_MethodName: ChangeDictionary
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5418,7 +5419,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1880052930}
         m_TargetAssemblyTypeName: ControlManager, Assembly-CSharp
-        m_MethodName: ChangeControls
+        m_MethodName: ChangeDictionary
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5552,7 +5553,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1880052930}
         m_TargetAssemblyTypeName: ControlManager, Assembly-CSharp
-        m_MethodName: ChangeControls
+        m_MethodName: ChangeDictionary
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

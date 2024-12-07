@@ -43,21 +43,19 @@ public class ControlManager : MonoBehaviour
                 if(key==KeyCode.Escape)
                 {
                     //faut sortir du menu
+                    listening=false;
+                    return;
                 }
-                foreach(KeyValuePair<string,KeyCode> pair in controls)
+                bool keyInUse=controls.Any(pair=>pair.Value==key);
+                if (keyInUse)
                 {
-                    if (key != pair.Value)
-                    {
-                        controls[name] = key; 
-                        RefreshNames();
-                    }
-                        
-                    else
-                        print(ERROR_SAME_KEY);
-                    
-
-
+                    print(ERROR_SAME_KEY);
+                    listening = false;
+                    return;
                 }
+                controls[name] = key;
+                RefreshNames();
+                return;
                 
             }
         }
