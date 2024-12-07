@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -6,7 +8,7 @@ using UnityEngine.UI;
 
 public class ControlManager : MonoBehaviour
 {
-    
+    private const string ERROR_SAME_KEY = "Error the key you are trying to use is not ";
     public Dictionary<string, KeyCode> controls = new Dictionary<string, KeyCode>
         {
             { "forward", KeyCode.W },
@@ -21,6 +23,7 @@ public class ControlManager : MonoBehaviour
         };
 
     public bool listening = false;
+    [HideInInspector] public string nameof = "";
 
     public Button[] buttons;
 
@@ -29,7 +32,37 @@ public class ControlManager : MonoBehaviour
         RefreshNames();
 
     }
+    public void ChangeDictionary(string name)
+    {
+        listening = true;
+        nameof= name;
+        foreach(KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
+        {
+            if (Input.GetKeyDown(key))
+            {
+                if(key==KeyCode.Escape)
+                {
+                    //faut sortir du menu
+                }
+                foreach(KeyValuePair<string,KeyCode> pair in controls)
+                {
+                    if (key != pair.Value)
+                    {
+                        controls[name] = key; 
+                        RefreshNames();
+                    }
+                        
+                    else
+                        print(ERROR_SAME_KEY);
+                    
 
+
+                }
+                
+            }
+        }
+    }
+    
     private void RefreshNames()
     {
 
@@ -49,6 +82,7 @@ public class ControlManager : MonoBehaviour
                 }
             }
         }
+        listening=false;
     }
 
 
@@ -57,7 +91,7 @@ public class ControlManager : MonoBehaviour
     {
         if (listening)
         {
-
+            ChangeDictionary(nameof);
 
         }
 

@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Canvas Pause;//1
     [SerializeField] private Canvas Settings;//2
 
+    
+
 
     void Start()
     {
