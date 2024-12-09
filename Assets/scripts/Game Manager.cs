@@ -5,16 +5,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Canvas Game;//0
-    [SerializeField] private Canvas Pause;//1
-    [SerializeField] private Canvas Settings;//2
+     [SerializeField]Canvas canvas;
 
     
 
 
     void Start()
     {
-        /*ShowCanevas(0)*/;//on met pour que de base ce sois le game UI
+        canvas.enabled=true;//on met pour que de base ce sois le game UI
     }
 
 
@@ -25,26 +23,6 @@ public class GameManager : MonoBehaviour
     }
    
 
-    public  void ShowCanevas(int canevas)
-    {
-        if(canevas == 0)
-        {
-            Game.enabled = true;
-            Pause.enabled = false;
-            Settings.enabled = false;
-        }
-        else if(canevas == 1)
-        {
-            Game.enabled = false;
-            Pause.enabled = true;
-            Settings.enabled = false;
-        }
-        else
-        {
-            Game.enabled=false;
-            Pause.enabled=false;
-            Settings.enabled=true;
-        }
-    }
+   
 
 }

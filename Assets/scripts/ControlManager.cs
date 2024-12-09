@@ -9,6 +9,10 @@ using UnityEngine.UI;
 public class ControlManager : MonoBehaviour
 {
     private const string ERROR_SAME_KEY = "Error the key you are trying to use is not ";
+
+    public PauseMenu pauseMenu;
+
+
     public Dictionary<string, KeyCode> controls = new Dictionary<string, KeyCode>
         {
             { "forward", KeyCode.W },
@@ -29,6 +33,8 @@ public class ControlManager : MonoBehaviour
 
     private void Awake()
     {
+        enabled = true;
+        pauseMenu = FindObjectOfType<PauseMenu>();
         RefreshNames();
 
     }
@@ -42,7 +48,8 @@ public class ControlManager : MonoBehaviour
             {
                 if(key==KeyCode.Escape)
                 {
-                    //faut sortir du menu
+                    
+                    pauseMenu.Pausez();
                     listening=false;
                     return;
                 }
@@ -94,4 +101,15 @@ public class ControlManager : MonoBehaviour
         }
 
     }
+    void GestionPause()
+    {
+        print("Pause");
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            print("penis");
+            pauseMenu.Pausez();
+            enabled = false;
+        }
+    }
+
 }
