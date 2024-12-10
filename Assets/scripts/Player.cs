@@ -4,15 +4,48 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+     Camera cam;
+    CharacterController controller;
+    [SerializeField] const float SPRINT_MULTI = 1.5f;
+    [SerializeField] float speed = 1;
+   [SerializeField] int maxBullet;
+
+    GameObject barrel;// a initialiser pour trouver de ou on spawn les bullets
+    float shootDelay = 0.1f;
+
+    
+    [SerializeField] float jumpForce = 10;
+    private ControlManager controlManager;
+    private PauseMenu pauseMenu;
+    private bool aTerre = true;
+    CharacterController cc;
+
+    private void Start()
     {
         
+        cam=GetComponentInChildren<Camera>();
+        cc = GetComponent<CharacterController>();
+        controlManager=FindAnyObjectByType<ControlManager>();   
+        pauseMenu=FindAnyObjectByType<PauseMenu>();
+        Cursor.lockState = CursorLockMode.Locked;
+
+        
     }
+    
 
     // Update is called once per frame
     void Update()
     {
-        
+        Moving();
+    }
+
+    private void Moving()
+    {
+
+        if (Input.GetKeyDown(controlManager.controls["foward"]))
+        {
+            print("lol");
+        }
+
     }
 }
