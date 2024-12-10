@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -8,10 +10,19 @@ public class Player : MonoBehaviour
     CharacterController controller;
     [SerializeField] const float SPRINT_MULTI = 1.5f;
     [SerializeField] float speed = 1;
-   [SerializeField] int maxBullet;
+   
 
     GameObject barrel;// a initialiser pour trouver de ou on spawn les bullets
     float shootDelay = 0.1f;
+
+
+    //Ui
+  [SerializeField]  Slider healthBar;
+    [SerializeField] TextMeshProUGUI TMPhealth;
+   [SerializeField] TextMeshProUGUI TMPbulletsLeft;
+    [SerializeField] TextMeshProUGUI TMPbullets;
+    private int bullets = 20;
+    private int health = 100;
 
     
     [SerializeField] float jumpForce = 10;
@@ -29,7 +40,23 @@ public class Player : MonoBehaviour
         pauseMenu=FindAnyObjectByType<PauseMenu>();
         Cursor.lockState = CursorLockMode.Locked;
 
+        UpdateHealthUI();
+
         
+
+        
+    }
+
+    public void DealDamage(int change)
+    {
+        health += change;
+        UpdateHealthUI();
+    }
+
+    private void UpdateHealthUI()
+    {
+        healthBar.value= health;
+        TMPhealth.text = health.ToString();
     }
     
 
