@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     [SerializeField] TextMeshProUGUI TMPbullets;
     private int bullets = 20;
     private int health = 100;
+    [SerializeField] int maxHealth = 100;
 
     
     [SerializeField] float jumpForce = 10;
@@ -33,21 +34,24 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+
         
         cam=GetComponentInChildren<Camera>();
         cc = GetComponent<CharacterController>();
         controlManager=FindAnyObjectByType<ControlManager>();   
         pauseMenu=FindAnyObjectByType<PauseMenu>();
         Cursor.lockState = CursorLockMode.Locked;
-
-        UpdateHealthUI();
+        healthBar.maxValue=maxHealth;
+        healthBar.value=maxHealth;
+        TMPhealth.text=maxHealth.ToString();
+        
 
         
 
         
     }
 
-    public void DealDamage(int change)
+    public void HealthChange(int change)
     {
         health += change;
         UpdateHealthUI();
@@ -63,7 +67,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Moving();
+        //Moving();
     }
 
     private void Moving()
