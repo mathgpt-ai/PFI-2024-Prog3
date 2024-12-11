@@ -82,13 +82,21 @@ public class Player : MonoBehaviour
         //Moving();
     }
 
+    private void Shoot()
+    {
+        
+    }
+
+    private void Reload()
+    {
+        animator.SetBool(RELOAD_ANIMATION_STING, true);
+
+        animator.SetBool(RELOAD_ANIMATION_STING, false);
+    }
     private void Moving()
     {
 
-        if (Input.GetKeyDown(controlManager.controls["foward"]))
-        {
-            print("lol");
-        }
+        
 
     }
 }
