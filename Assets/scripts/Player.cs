@@ -6,38 +6,49 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-     Camera cam;
+    //references
+    private ControlManager controlManager;
+    private PauseMenu pauseMenu;
+
+
+
+    //movement
+    Camera cam;
     CharacterController controller;
     [SerializeField] const float SPRINT_MULTI = 1.5f;
     [SerializeField] float speed = 1;
+    [SerializeField] float jumpForce = 10;
+    
+    private bool aTerre = true;
    
 
+
+    //shooting
     GameObject barrel;// a initialiser pour trouver de ou on spawn les bullets
     float shootDelay = 0.1f;
+    private int bulletsRN = 20;
+    private int bulletsTotal;
+
+    //animation
+    public Animator animator;
+    private const string RELOAD_ANIMATION_STING = "reload";
 
 
-    //Ui
+    //UI
   [SerializeField]  Slider healthBar;
     [SerializeField] TextMeshProUGUI TMPhealth;
    [SerializeField] TextMeshProUGUI TMPbulletsLeft;
     [SerializeField] TextMeshProUGUI TMPbullets;
-    private int bullets = 20;
     private int health = 100;
     [SerializeField] int maxHealth = 100;
 
     
-    [SerializeField] float jumpForce = 10;
-    private ControlManager controlManager;
-    private PauseMenu pauseMenu;
-    private bool aTerre = true;
-    CharacterController cc;
-
     private void Start()
     {
-
+        animator.SetBool(RELOAD_ANIMATION_STING,false);
         
         cam=GetComponentInChildren<Camera>();
-        cc = GetComponent<CharacterController>();
+        controller = GetComponent<CharacterController>();
         controlManager=FindAnyObjectByType<ControlManager>();   
         pauseMenu=FindAnyObjectByType<PauseMenu>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -62,6 +73,7 @@ public class Player : MonoBehaviour
         healthBar.value= health;
         TMPhealth.text = health.ToString();
     }
+
     
 
     // Update is called once per frame
