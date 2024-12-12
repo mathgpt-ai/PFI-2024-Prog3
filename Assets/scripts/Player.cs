@@ -84,7 +84,10 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
-        
+        if (Input.GetKeyDown(controlManager.controls["shoot"]))
+        {
+
+        }
     }
 
     private void Reload()
