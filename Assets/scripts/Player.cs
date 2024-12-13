@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
 
 
     //pause menu
-    bool isPaused = false;
+    
 
 
 
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Shoot();
+        GunManaging();
         GestionPause();
     }
     private void GunManaging()
@@ -143,6 +143,7 @@ public class Player : MonoBehaviour
             if (tempBullet != null)//pour etre sur que le pool est ok//
             {
                 tempBullet.transform.position = barrel.transform.position;
+                //tempBullet.transform.rotation = barrel.transform.rotation;
                 tempBullet.SetActive(true);
 
                 print("shoot");

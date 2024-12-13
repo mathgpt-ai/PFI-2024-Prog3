@@ -11,6 +11,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Canvas Settings;//2
    [SerializeField] Player Player;
 
+    private const float BaseFov = 87.5f;
+
    
     
     public void Pausez()

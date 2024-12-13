@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float speed = 1000;
     Rigidbody rb;
+    [SerializeField] float lifeSpan = 2;
 
     [SerializeField] int bulletDamage;
     private void Awake()
@@ -16,7 +17,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        rb.velocity = transform.forward * speed*Time.deltaTime;
+        rb.velocity = Vector3.forward * speed*Time.deltaTime;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -29,5 +30,19 @@ public class Bullet : MonoBehaviour
         // si je veux mettre des effets but im lazy for now
 
         gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        Invoke(nameof(DisableBullet), lifeSpan);
+    }
+    private void DisableBullet()
+    {
+        gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke(nameof(DisableBullet));
     }
 }
