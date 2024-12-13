@@ -13,8 +13,10 @@ public class ControlManager : MonoBehaviour
     public PauseMenu pauseMenu;
 
 
+
+
     public Dictionary<string, KeyCode> controls = new Dictionary<string, KeyCode>
-        {
+    {
             { "forward", KeyCode.W },
             { "backwards", KeyCode.S },
             { "left", KeyCode.A },
@@ -24,7 +26,7 @@ public class ControlManager : MonoBehaviour
             { "aim", KeyCode.Mouse1 },
             { "sprint", KeyCode.LeftControl },
             { "interact", KeyCode.E }
-        };
+    };
 
     public bool listening = false;
     [HideInInspector] public string nameof = "";
@@ -41,19 +43,19 @@ public class ControlManager : MonoBehaviour
     public void ChangeDictionary(string name)
     {
         listening = true;
-        nameof= name;
-        foreach(KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
+        nameof = name;
+        foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
         {
             if (Input.GetKeyDown(key))
             {
-                if(key==KeyCode.Escape)
+                if (key == KeyCode.Escape)
                 {
-                    
+
                     pauseMenu.Pausez();
-                    listening=false;
+                    listening = false;
                     return;
                 }
-                bool keyInUse=controls.Any(pair=>pair.Value==key);
+                bool keyInUse = controls.Any(pair => pair.Value == key);
                 if (keyInUse)
                 {
                     print(ERROR_SAME_KEY);
@@ -63,18 +65,18 @@ public class ControlManager : MonoBehaviour
                 controls[name] = key;
                 RefreshNames();
                 return;
-                
+
             }
         }
     }
-    
+
     private void RefreshNames()
     {
 
         foreach (Button button in buttons)
         {
-            
-            
+
+
             var texts = button.GetComponentsInChildren<TextMeshProUGUI>();
             foreach (TextMeshProUGUI text in texts)
             {
@@ -87,7 +89,7 @@ public class ControlManager : MonoBehaviour
                 }
             }
         }
-        listening=false;
+        listening = false;
     }
 
 

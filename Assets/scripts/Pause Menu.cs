@@ -9,18 +9,21 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Canvas Game;//0
     [SerializeField] private Canvas Pause;//1
     [SerializeField] private Canvas Settings;//2
+   [SerializeField] Player Player;
 
-
-   public void Pausez()
+   
+    
+    public void Pausez()
    {
         Cursor.lockState = CursorLockMode.Confined;
         Time.timeScale = 0.0f;
         ShowCanevas(1);
+        //Player.enabled = false;
 
    }
     private void Start()
     {
-        ShowCanevas(1);
+        
     }
     public void SettingPause()
     {
@@ -31,6 +34,8 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1.0f;
         ShowCanevas(0);
+        //Player.enabled = true;
+        
     }
     private void ShowCanevas(int canevas)
     {
