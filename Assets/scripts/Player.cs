@@ -69,7 +69,10 @@ public class Player : MonoBehaviour
     [SerializeField] int maxHealth = 100;
 
 
-    //pause menu
+    //moving
+
+    [SerializeField] float gravity = 10;
+    Vector3 jump = new Vector3(0, 0, 0);
 
 
 
@@ -81,7 +84,7 @@ public class Player : MonoBehaviour
         animator.SetBool(RELOAD_ANIMATION_STING, false);
 
         cam = GetComponentInChildren<Camera>();
-        controller = GetComponent<CharacterController>();
+        controller = GetComponentInChildren<CharacterController>();
         controlManager = FindAnyObjectByType<ControlManager>();
         pauseMenu = FindAnyObjectByType<PauseMenu>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -135,6 +138,7 @@ public class Player : MonoBehaviour
         CameraRotation();
         GunManaging();
         GestionPause();
+        Moving();
     }
     private void GunManaging()
     {
@@ -166,7 +170,7 @@ public class Player : MonoBehaviour
 
 
 
-        if (Input.GetMouseButton(0) && shootDelay <= 0 && bulletsRN > 0)
+        if (Input.GetMouseButton(0) && shootDelay <= 0 && bulletsRN > 0 && !reloading)
         {
 
             GameObject tempBullet = ObjectPool.instance.GetPooledObject(bullet);
@@ -217,15 +221,15 @@ public class Player : MonoBehaviour
         }
         if (reloading)
         {
-            timeLeft2Reload -= Time.deltaTime; 
+            timeLeft2Reload -= Time.deltaTime;
 
-            if(timeLeft2Reload <= 0.01)
+            if (timeLeft2Reload <= 0.01)
             {
-                animator.SetBool("reload", false); 
+                animator.SetBool("reload", false);
                 reloading = false;
                 if (bulletsTotal >= magSize)
                 {
-                    bulletsTotal -= magSize;
+                    bulletsTotal -= magSize - bulletsRN;
                     bulletsRN = magSize;
                 }
                 else
@@ -237,11 +241,52 @@ public class Player : MonoBehaviour
             TMPbulletsRN.text = bulletsRN.ToString();
             TMPbulletsTotal.text = bulletsTotal.ToString();
         }
-            
+
 
     }
     private void Moving()
     {
+
+        Vector3 cameraFoward = cam.transform.forward;
+        Vector3 cameraRight = cam.transform.right;
+
+        cameraFoward.y = 0;
+        cameraRight.y = 0;
+
+        cameraFoward.Normalize();
+        cameraRight.Normalize();
+        float moveX = 0;
+        float moveZ = 0;
+        if (Input.GetKey(controlManager.controls["forward"]))
+            moveZ = 1;
+        if (Input.GetKey(controlManager.controls["backwards"]))
+            moveZ = -1;
+        if (Input.GetKey(controlManager.controls["left"]))
+            moveX = -1;
+        if (Input.GetKey(controlManager.controls["right"]))
+            moveX = 1;
+
+        Vector3 move = (cameraFoward * moveZ + cameraRight * moveX).normalized;
+
+        controller.Move(move * speed * Time.deltaTime);
+
+        if (!controller.isGrounded)
+        {
+            jump -= transform.up * Time.deltaTime * gravity;
+            print("player not grouded");
+            
+            
+        }
+        else
+        {
+            
+            if (Input.GetKey(controlManager.controls["jump"]))
+            {
+                print("y devrais sauter");
+                jump = transform.up * jumpForce;
+                jump.y=Mathf.Max(-1,jump.y);
+            }
+        }
 
 
     }
@@ -257,19 +302,5 @@ public class Player : MonoBehaviour
         body.transform.rotation = Quaternion.Euler(0, camRotation.y + body.transform.rotation.y, 0);
     }
 
-
-
-
-
-
-    public void DisableMovement()
-    {
-        canMove = false;
-    }
-
-    public void EnableMovement()
-    {
-        canMove = true;
-    }
 
 }

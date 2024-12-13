@@ -25,7 +25,7 @@ public class ControlManager : MonoBehaviour
             { "shoot", KeyCode.Mouse0 },
             { "aim", KeyCode.Mouse1 },
             { "sprint", KeyCode.LeftControl },
-            { "interact", KeyCode.E }
+            { "jump", KeyCode.Space }
     };
 
     public bool listening = false;
