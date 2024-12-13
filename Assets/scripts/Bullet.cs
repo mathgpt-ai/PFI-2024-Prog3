@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        rb.velocity = Vector3.forward * speed*Time.deltaTime;
+        rb.velocity = transform.forward * speed*Time.deltaTime;
     }
 
     private void OnCollisionEnter(Collision collision)

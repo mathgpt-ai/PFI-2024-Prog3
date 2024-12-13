@@ -8,10 +8,11 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     //references
-    [SerializeField]private ControlManager controlManager;
+    [SerializeField] private ControlManager controlManager;
     [SerializeField] private PauseMenu pauseMenu;
 
-
+    //random
+    Vector3 camRotation = new Vector3(0, 0, 0);
 
 
     //movement
@@ -21,6 +22,9 @@ public class Player : MonoBehaviour
     [SerializeField] float speed = 1;
     [SerializeField] float jumpForce = 10;
     private bool canMove = true;
+    [SerializeField] float cameraSpeed = 1;//sensitivity i think
+
+    [SerializeField] GameObject body;
 
     private bool aTerre = true;
 
@@ -29,13 +33,24 @@ public class Player : MonoBehaviour
     //shooting
     [SerializeField] GameObject barrel;// a initialiser pour trouver de ou on spawn les bullets
     float shootDelay = 0f;
-    [SerializeField]private int bulletsRN = 20;//bullets he can shoot before reload    A ENLEVERR LE SERIALISE FIELD LORSQUE LE RELOAD FAAIT ET LE METTRE SUR BULLETS TOTAL
-    private int bulletsTotal;//bullets total including reload bullets
-    [SerializeField]GameObject bullet;
+    private int bulletsRN = 20;//bullets he can shoot before reload  
+    [SerializeField] private int bulletsTotal = 100;//bullets total in reloads
+    [SerializeField] GameObject bullet;
+    [SerializeField] int magSize = 20;
 
     [SerializeField] float shootingRate = 10;
-    
-    
+
+
+    //aiming
+    private float waitTimeForAds = 4;
+    private float waitTimeForAdsOriginal;
+
+
+    //reloading
+    private bool reloading = false;
+    private float timeLeft2Reload = 4;
+    private float timeToReloadOriginal = 4;
+
 
 
 
@@ -48,21 +63,21 @@ public class Player : MonoBehaviour
     [SerializeField] Canvas PauseCanny;
     [SerializeField] Slider healthBar;
     [SerializeField] TextMeshProUGUI TMPhealth;
-    [SerializeField] TextMeshProUGUI TMPbulletsLeft;//bullets before reload
-    [SerializeField] TextMeshProUGUI TMPbullets;//all the bullets
+    [SerializeField] TextMeshProUGUI TMPbulletsRN;//bullets before reload
+    [SerializeField] TextMeshProUGUI TMPbulletsTotal;//all the bullets
     private int health = 100;
     [SerializeField] int maxHealth = 100;
 
 
     //pause menu
-    
+
 
 
 
     private void Start()
     {
-        
-       
+
+        animator.SetBool("adsing", false);
         animator.SetBool(RELOAD_ANIMATION_STING, false);
 
         cam = GetComponentInChildren<Camera>();
@@ -73,9 +88,12 @@ public class Player : MonoBehaviour
         healthBar.maxValue = maxHealth;
         healthBar.value = maxHealth;
         TMPhealth.text = maxHealth.ToString();
+        TMPbulletsRN.text = bulletsRN.ToString();
+        TMPbulletsTotal.text = bulletsTotal.ToString();
 
+        waitTimeForAds = waitTimeForAdsOriginal;
         pauseMenu.Resume();
-
+        bulletsRN = magSize;
 
 
 
@@ -100,13 +118,13 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            
+
 
             pauseMenu.Pausez();
-            
-            
+
+
         }
-       
+
     }
 
 
@@ -114,6 +132,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CameraRotation();
         GunManaging();
         GestionPause();
     }
@@ -126,7 +145,20 @@ public class Player : MonoBehaviour
     }
     private void AimDownSight()
     {
-        //a faire
+        if (Input.GetMouseButton(1) && !reloading)
+        {
+            animator.SetBool("adsing", true);
+            waitTimeForAds = waitTimeForAdsOriginal;
+
+
+
+        }
+        else
+        {
+            animator.SetBool("adsing", false);
+            waitTimeForAds -= Time.deltaTime;
+        }
+
     }
 
     private void Shoot()
@@ -134,49 +166,95 @@ public class Player : MonoBehaviour
 
 
 
-        if (Input.GetMouseButton(0) && shootDelay <=0&&bulletsRN>0)
+        if (Input.GetMouseButton(0) && shootDelay <= 0 && bulletsRN > 0)
         {
 
             GameObject tempBullet = ObjectPool.instance.GetPooledObject(bullet);
-            
+
 
             if (tempBullet != null)//pour etre sur que le pool est ok//
             {
                 tempBullet.transform.position = barrel.transform.position;
-                //tempBullet.transform.rotation = barrel.transform.rotation;
+
+
+
+                tempBullet.transform.forward = barrel.transform.forward;
+
+
+
+
                 tempBullet.SetActive(true);
 
-                print("shoot");
+
                 bulletsRN--;
-                TMPbulletsLeft.SetText(bulletsRN.ToString());
-                
+                TMPbulletsRN.SetText(bulletsRN.ToString());
+
 
 
             }
-            shootDelay=1/shootingRate;
+            shootDelay = 1 / shootingRate;
 
 
         }
         else
-            shootDelay-=Time.deltaTime;
-        
+            shootDelay -= Time.deltaTime;
+
 
     }
 
-    
+
 
 
     private void Reload()
     {
-        animator.SetBool(RELOAD_ANIMATION_STING, true);
+        if (Input.GetKeyDown(controlManager.controls["reload"]) && bulletsTotal > 0)
+        {
+            animator.SetBool("reload", true);
+            reloading = true;
+            timeLeft2Reload = timeToReloadOriginal;
 
-        animator.SetBool(RELOAD_ANIMATION_STING, false);
+
+        }
+        if (reloading)
+        {
+            timeLeft2Reload -= Time.deltaTime; 
+
+            if(timeLeft2Reload <= 0.01)
+            {
+                animator.SetBool("reload", false); 
+                reloading = false;
+                if (bulletsTotal >= magSize)
+                {
+                    bulletsTotal -= magSize;
+                    bulletsRN = magSize;
+                }
+                else
+                {
+                    bulletsRN = bulletsTotal;
+                    bulletsTotal = 0;
+                }
+            }
+            TMPbulletsRN.text = bulletsRN.ToString();
+            TMPbulletsTotal.text = bulletsTotal.ToString();
+        }
+            
+
     }
     private void Moving()
     {
 
 
+    }
 
+    void CameraRotation()
+    {
+
+        camRotation += new Vector3(0, Input.GetAxis("Look_Horizontal") * Time.deltaTime * cameraSpeed, 0);
+
+        camRotation.x = Mathf.Clamp(camRotation.x, -70, 70);//le joueur ne regarde pasa ses pieds
+
+        cam.transform.rotation = Quaternion.Euler(camRotation.x, camRotation.y, 0);
+        body.transform.rotation = Quaternion.Euler(0, camRotation.y + body.transform.rotation.y, 0);
     }
 
 
