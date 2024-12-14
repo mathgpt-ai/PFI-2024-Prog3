@@ -21,12 +21,12 @@ public class Player : MonoBehaviour
     [SerializeField] const float SPRINT_MULTI = 1.5f;
     [SerializeField] float speed = 1;
     [SerializeField] float jumpForce = 10;
-    private bool canMove = true;
+   
     [SerializeField] float cameraSpeed = 1;//sensitivity i think
 
     [SerializeField] GameObject body;
 
-    private bool aTerre = true;
+    
 
 
 
@@ -267,14 +267,18 @@ public class Player : MonoBehaviour
             moveX = 1;
 
         Vector3 move = (cameraFoward * moveZ + cameraRight * moveX).normalized;
+        if (Input.GetKey(controlManager.controls["sprint"]))
+            controller.Move(move * speed * Time.deltaTime*SPRINT_MULTI);
+        else
+            controller.Move(move * speed * Time.deltaTime);
 
-        controller.Move(move * speed * Time.deltaTime);
 
+        //ca fonctionne pas il detecte qu'il est jamais grounded
         if (!controller.isGrounded)
         {
             jump -= transform.up * Time.deltaTime * gravity;
-            print("player not grouded");
-            
+
+            print("no");
             
         }
         else
@@ -282,7 +286,7 @@ public class Player : MonoBehaviour
             
             if (Input.GetKey(controlManager.controls["jump"]))
             {
-                print("y devrais sauter");
+               
                 jump = transform.up * jumpForce;
                 jump.y=Mathf.Max(-1,jump.y);
             }
