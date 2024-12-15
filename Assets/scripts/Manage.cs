@@ -16,10 +16,15 @@ public class Manage : MonoBehaviour
     void Start()
     {
         CreateDots(NumberOfNodes);
-        path = new Pathfinding(space);
+
+        Invoke("CreatePath", 5);
 
     }
 
+    void CreatePath()
+    {
+        path=new Pathfinding(space);
+    }
 
     private void CreateDots(int size)
     {
