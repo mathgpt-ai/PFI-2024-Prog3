@@ -40,15 +40,13 @@ public class Manage : MonoBehaviour
     }
 }
 
-public static class Pathfinding
+public  class Pathfinding 
 {
-  
+    private readonly List<GameObject>[] neighbours;
+
 
 }
-public interface IGraph
-{
 
-}
 
 
 
