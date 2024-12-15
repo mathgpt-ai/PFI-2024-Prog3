@@ -278,7 +278,7 @@ public class Player : MonoBehaviour
         {
             jump -= transform.up * Time.deltaTime * gravity;
 
-            print("no");
+          
             
         }
         else

@@ -7,14 +7,14 @@ public class Sphere : MonoBehaviour
 {
 
     private GameObject go;
-    Pathfinding path;
+    Manage manage;
     private Rigidbody rb;
     
 
     void Start()
     {
         go = GameObject.Find("GameManager");
-        path=go.GetComponent<Pathfinding>();
+        manage=go.GetComponent<Manage>();
         rb = GetComponent<Rigidbody>();
       
     }
@@ -28,8 +28,8 @@ public class Sphere : MonoBehaviour
 
 
             rb.isKinematic = true;
-           
-            path.Nodes.Add(gameObject);
+
+        manage.nodes.Add(gameObject);
         
        
         

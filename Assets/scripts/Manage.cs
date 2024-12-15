@@ -8,13 +8,14 @@ using UnityEngine;
 public class Manage : MonoBehaviour
 {
     [SerializeField] private int space = 2;
-
+    [SerializeField] private int NumberOfNodes = 50;
     [SerializeField] GameObject Dots;
-    public List<GameObject> DotsList;
+   [HideInInspector] public List<GameObject> nodes;
+    
     public Pathfinding path;
     void Start()
     {
-        CreateDots(10);
+        CreateDots(NumberOfNodes);
         path = new Pathfinding(space);
 
     }
@@ -40,9 +41,10 @@ public class Manage : MonoBehaviour
 public class Pathfinding
 {
     private List<GameObject>[] neighbours;
-    public List<GameObject> Nodes;
+  [HideInInspector]  public List<GameObject> Nodes;
     private int space;//a changer et prendre la valeur du manage ;
     private float buffer = 0.0001f;
+    [SerializeField] private float MaxHeight = 5;
 
     public Pathfinding(int spacez)
     {
@@ -68,7 +70,7 @@ public class Pathfinding
                     Vector3 currentNodeVec = new Vector3(Nodes[i].transform.position.x, 0, Nodes[i].transform.position.z);
                     Vector3 otherNodeVec = new Vector3(Nodes[j].transform.position.x, 0, Nodes[j].transform.position.z);
                     float distanceBetween = Vector3.SqrMagnitude(currentNodeVec - otherNodeVec);
-                    if (distanceBetween < buffer + space)
+                    if (distanceBetween < buffer + space && Math.Abs(Nodes[i].transform.position.y - Nodes[j].transform.position.y)<MaxHeight)
                     {
                         neighbours[i].Add(Nodes[j]);
                     }

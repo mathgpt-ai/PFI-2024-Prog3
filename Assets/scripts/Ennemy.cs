@@ -8,6 +8,7 @@ public class Ennemy : MonoBehaviour
 {
     [SerializeField] int maxHealth = 10;
     [SerializeField] int dps = 5;//each second he deals x damage not continious attack
+    [SerializeField] float speed = 5;
     Canvas canevas;
     Slider healthBar;
     [SerializeField]GameObject Player;
@@ -16,10 +17,14 @@ public class Ennemy : MonoBehaviour
     private Manage manage;
     [SerializeField] GameObject Manager;
     private List<GameObject> pathList;
+    Rigidbody rb;
+
+    private int TargetInt = 0;
 
 
     void Start()
     {
+        rb=GetComponent<Rigidbody>();
         manage= Manager.GetComponent<Manage>();
         canevas=GetComponentInChildren<Canvas>();
         healthBar=GetComponentInChildren<Slider>();
@@ -33,13 +38,13 @@ public class Ennemy : MonoBehaviour
     {
         pathList = Pathfinding.GetPath(manage.path, gameObject, Player);
 
-
+        GameObject currentTarget = pathList[TargetInt];
+        Vector3 targetPosition = currentTarget.transform.position;
+        Vector3 direction = (targetPosition - transform.position).normalized;
+        rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
     }
 
-    void MoveToPlayer()
-    {
-
-    }
+    
 
    
     void DealDamage()
