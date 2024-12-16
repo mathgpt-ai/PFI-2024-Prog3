@@ -26,10 +26,10 @@ public class Ennemy : MonoBehaviour
     {
         rb=GetComponent<Rigidbody>();
         manage= Manager.GetComponent<Manage>();
-        canevas=GetComponentInChildren<Canvas>();
-        healthBar=GetComponentInChildren<Slider>();
-        healthBar.maxValue=maxHealth;
-        healthBar.value=maxHealth;
+        //canevas=GetComponentInChildren<Canvas>();
+        //healthBar=GetComponentInChildren<Slider>();
+        //healthBar.maxValue=maxHealth;
+        //healthBar.value=maxHealth;
         
     }
     
@@ -54,6 +54,8 @@ public class Ennemy : MonoBehaviour
     }
     void Update()
     {
+        
+        Invoke("FollowPlayer", 9);
         
     }
 }
